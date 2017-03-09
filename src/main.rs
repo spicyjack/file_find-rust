@@ -36,26 +36,49 @@ fn main() {
    idg_dir.push("Doom");
    idg_dir.push("idgames");
 
+/*
+// doesn't work, try!() won't handle _Result_ objects
+   for entry in try!(fs::read_dir(idg_dir)) {
+       let dir = try!(entry);
+       println!("{:?}", dir.path());
+   }
+*/
+
+/*
    // try and read the contents of idg_dir/
-   match fs::read_dir(idg_dir) {
-      // nope, can't read for some reason
-      Err(why) => println!("! {:?}", why.kind()),
-      // yep, can read contents of idg_dir, see what items are there
-      Ok(items) => for item in items {
+   // - doesn't work, try!() won't handle _Result_ objects
+   for entry in try!(fs::read_dir(idg_dir)) {
+      let dir = try!(entry);
+      // 'entry' is still a _Result_, so this is broken
+      let metadata = try!(entry.metadata());
+      // 'dir' is still a _DirEntry_
+      if dir.is_dir() {
+         println!("d {:?}", dir.path());
+      } else {
+         println!("! {:?}", dir.path());
+      }
+   }
+*/
+
+/*
+   if let Ok(entries) = fs::read_dir(idg_dir) {
+      for entry in entries {
          // 'item' is a Result, unwrap it to get access to Metadata
-         match item.unwrap() {
-            Err(why) => println!("! {:?}", why.kind()),
-            //Ok(metadata) => println!("- {:?}", metadata.file_type()),
-            //Ok(metadata) => println!("- {:?}", metadata.permissions()),
-            // is this a file, directory, or ???
-            Ok(entry) => {
-               if entry.metadata.is_dir() {
+         if let Ok(entry) = entry {
+               if let Ok(metadata) = entry.metadata() {};
+               // entry.path() returns a _Result_
+               if let Ok(path) = entry.path() {};
+               // 'entry' is a _DirEntry_, and doesn't have an 'is_dir()'
+               // method
+               if entry.is_dir() {
                   println!("d {:?} {:?}",
-                     entry.metadata.file_type(),
-                     entry.path());
-               }
+                     // 'metadata' isn't available here
+                     metadata.file_type(),
+                     // the compiler doesn't know what 'path' is here
+                     path);
             }
          }
       }
    }
+*/
 }
