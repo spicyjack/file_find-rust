@@ -82,12 +82,26 @@ fn main() {
    }
 */
 
+/*
+   // working example
    println!("Updated іdgames/ path: {}", idg_dir.display());
    // read the contents of idg_dir/
    match fs::read_dir(idg_dir) {
       Err(why) => println!("! {:?}", why.kind()),
       Ok(paths) => for path in paths {
          println!("> {:?}", path.unwrap().path());
+		}
+	}
+*/
+
+	// working example from:
+	// https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
+	if let Ok(entries) = fs::read_dir(idg_dir) {
+		for entry in entries {
+			if let Ok(entry) = entry {
+			// Here, `entry` is a `DirEntry`.
+				println!("{:?}", entry.file_name());
+			}
 		}
 	}
 }
