@@ -5,6 +5,19 @@ use std::fs; // fs::read_dir()
 use std::path::PathBuf;
 
 
+enum ItemType {
+   Dir,
+   File,
+   Other,
+}
+
+
+struct FoundItem {
+   item_type: ItemType,
+   item_path: PathBuf,
+}
+
+
 fn main() {
    //let mut idg_dir_path = PathBuf::from("~/Files/Doom/idgames");
    // create an empty PathBuf
