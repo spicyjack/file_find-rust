@@ -81,4 +81,13 @@ fn main() {
       }
    }
 */
+
+   println!("Updated іdgames/ path: {}", idg_dir.display());
+   // read the contents of idg_dir/
+   match fs::read_dir(idg_dir) {
+      Err(why) => println!("! {:?}", why.kind()),
+      Ok(paths) => for path in paths {
+         println!("> {:?}", path.unwrap().path());
+		}
+	}
 }
