@@ -4,6 +4,7 @@ use std::fs; // fs::read_dir()
 //use std::path::Path;
 use std::path::PathBuf;
 
+
 fn main() {
    //let mut idg_dir_path = PathBuf::from("~/Files/Doom/idgames");
    // create an empty PathBuf
@@ -28,7 +29,16 @@ fn main() {
       Err(why) => println!("! {:?}", why.kind()),
       // yep, can read contents of idg_dir, see what items are there
       Ok(items) => for item in items {
-         println!("- {:?}", item.unwrap().path());
+         // Result<Metadata>
+         match item.unwrap().metadata() {
+            Err(why) => println!("! {:?}", why.kind()),
+            //Ok(metadata) => println!("- {:?}", metadata.file_type()),
+            //Ok(metadata) => println!("- {:?}", metadata.permissions()),
+            // is this a file, directory, or ???
+            Ok(metadata) => {
+               println!("- {:?}", metadata.is_dir());
+            }
+         }
       }
    }
 }
