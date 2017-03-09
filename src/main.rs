@@ -42,14 +42,18 @@ fn main() {
       Err(why) => println!("! {:?}", why.kind()),
       // yep, can read contents of idg_dir, see what items are there
       Ok(items) => for item in items {
-         // Result<Metadata>
-         match item.unwrap().metadata() {
+         // 'item' is a Result, unwrap it to get access to Metadata
+         match item.unwrap() {
             Err(why) => println!("! {:?}", why.kind()),
             //Ok(metadata) => println!("- {:?}", metadata.file_type()),
             //Ok(metadata) => println!("- {:?}", metadata.permissions()),
             // is this a file, directory, or ???
-            Ok(metadata) => {
-               println!("- {:?}", metadata.is_dir());
+            Ok(entry) => {
+               if entry.metadata.is_dir() {
+                  println!("d {:?} {:?}",
+                     entry.metadata.file_type(),
+                     entry.path());
+               }
             }
          }
       }
