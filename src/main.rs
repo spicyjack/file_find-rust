@@ -90,18 +90,27 @@ fn main() {
       Err(why) => println!("! {:?}", why.kind()),
       Ok(paths) => for path in paths {
          println!("> {:?}", path.unwrap().path());
-		}
-	}
+      }
+   }
 */
 
-	// working example from:
-	// https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
-	if let Ok(entries) = fs::read_dir(idg_dir) {
-		for entry in entries {
-			if let Ok(entry) = entry {
-			// Here, `entry` is a `DirEntry`.
-				println!("{:?}", entry.file_name());
-			}
-		}
-	}
+   // working example from:
+   // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
+   if let Ok(entries) = fs::read_dir(idg_dir) {
+      for dir_entry in entries {
+         if let Ok(dir_entry) = dir_entry {
+            //let path = dir_entry.path();
+            // get the metadata object for this DirEntry
+            if let Ok(metadata) = dir_entry.metadata() {
+               // below, `dir_entry` is a `DirEntry`.
+               if metadata.is_file() {
+                  println!("f {:?}", dir_entry.file_name());
+               }
+               else if metadata.is_dir() {
+                  println!("d {:?}", dir_entry.file_name());
+               }
+            }
+         }
+      }
+   }
 }
