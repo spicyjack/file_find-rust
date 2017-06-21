@@ -1,1 +1,6 @@
+# Rust output target files
 target
+# VIM swap files
+*.swp
+# Mac metadata files
+.DS_Store
