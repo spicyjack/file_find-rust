@@ -17,6 +17,15 @@ struct FoundItem {
    item_path: PathBuf,
 }
 
+impl FoundItem {
+   fn dump(self: FoundItem) {
+      match self.item_type {
+         ItemType::Dir   => println!("d {:?}", self.item_path.file_name()),
+         ItemType::File  => println!("f {:?}", self.item_path.file_name()),
+         ItemType::Other => println!("o {:?}", self.item_path.file_name()),
+      }
+   }
+}
 
 fn main() {
    //let mut idg_dir_path = PathBuf::from("~/Files/Doom/idgames");
@@ -46,18 +55,18 @@ fn main() {
             if let Ok(metadata) = dir_entry.metadata() {
                // below, `dir_entry` is a `DirEntry`.
                if metadata.is_file() {
-                  println!("f {:?}", dir_entry.file_name());
                   let item = FoundItem {
                      item_type: ItemType::File,
                      item_path: dir_entry.path()
                   };
+                  item.dump();
                }
                else if metadata.is_dir() {
-                  println!("d {:?}", dir_entry.file_name());
                   let item = FoundItem {
                      item_type: ItemType::Dir,
                      item_path: dir_entry.path()
                   };
+                  item.dump();
                }
             }
          }
