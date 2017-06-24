@@ -20,9 +20,14 @@ struct FoundItem {
 impl FoundItem {
    fn dump(self: FoundItem) {
       match self.item_type {
-         ItemType::Dir   => println!("d {:?}", self.item_path.file_name()),
-         ItemType::File  => println!("f {:?}", self.item_path.file_name()),
-         ItemType::Other => println!("o {:?}", self.item_path.file_name()),
+         // use .unwrap() to get the contents of the Option returned by
+         // file_name()
+         ItemType::Dir   => println!("d {:?}",
+            self.item_path.file_name().unwrap()),
+         ItemType::File  => println!("f {:?}",
+            self.item_path.file_name().unwrap()),
+         ItemType::Other => println!("o {:?}",
+            self.item_path.file_name().unwrap()),
       }
    }
 }
