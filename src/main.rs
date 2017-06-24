@@ -105,9 +105,17 @@ fn main() {
                // below, `dir_entry` is a `DirEntry`.
                if metadata.is_file() {
                   println!("f {:?}", dir_entry.file_name());
+                  let item = FoundItem {
+                     item_type: ItemType::File,
+                     item_path: dir_entry.path()
+                  };
                }
                else if metadata.is_dir() {
                   println!("d {:?}", dir_entry.file_name());
+                  let item = FoundItem {
+                     item_type: ItemType::Dir,
+                     item_path: dir_entry.path()
+                  };
                }
             }
          }
