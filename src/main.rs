@@ -73,6 +73,13 @@ fn main() {
                   };
                   item.dump();
                }
+               else {
+                  let item = FoundItem {
+                     item_type: ItemType::Other,
+                     item_path: dir_entry.path()
+                  };
+                  item.dump();
+               }
             }
          }
       }
