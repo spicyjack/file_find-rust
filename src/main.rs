@@ -36,6 +36,34 @@ fn main() {
    idg_dir.push("Doom");
    idg_dir.push("idgames");
 
+   // working example from:
+   // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
+   if let Ok(entries) = fs::read_dir(idg_dir) {
+      for dir_entry in entries {
+         if let Ok(dir_entry) = dir_entry {
+            //let path = dir_entry.path();
+            // get the metadata object for this DirEntry
+            if let Ok(metadata) = dir_entry.metadata() {
+               // below, `dir_entry` is a `DirEntry`.
+               if metadata.is_file() {
+                  println!("f {:?}", dir_entry.file_name());
+                  let item = FoundItem {
+                     item_type: ItemType::File,
+                     item_path: dir_entry.path()
+                  };
+               }
+               else if metadata.is_dir() {
+                  println!("d {:?}", dir_entry.file_name());
+                  let item = FoundItem {
+                     item_type: ItemType::Dir,
+                     item_path: dir_entry.path()
+                  };
+               }
+            }
+         }
+      }
+   }
+
 /*
 // doesn't work, try!() won't handle _Result_ objects
    for entry in try!(fs::read_dir(idg_dir)) {
@@ -94,31 +122,4 @@ fn main() {
    }
 */
 
-   // working example from:
-   // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
-   if let Ok(entries) = fs::read_dir(idg_dir) {
-      for dir_entry in entries {
-         if let Ok(dir_entry) = dir_entry {
-            //let path = dir_entry.path();
-            // get the metadata object for this DirEntry
-            if let Ok(metadata) = dir_entry.metadata() {
-               // below, `dir_entry` is a `DirEntry`.
-               if metadata.is_file() {
-                  println!("f {:?}", dir_entry.file_name());
-                  let item = FoundItem {
-                     item_type: ItemType::File,
-                     item_path: dir_entry.path()
-                  };
-               }
-               else if metadata.is_dir() {
-                  println!("d {:?}", dir_entry.file_name());
-                  let item = FoundItem {
-                     item_type: ItemType::Dir,
-                     item_path: dir_entry.path()
-                  };
-               }
-            }
-         }
-      }
-   }
 }
