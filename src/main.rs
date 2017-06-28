@@ -58,28 +58,29 @@ fn main() {
             //let path = dir_entry.path();
             // get the metadata object for this DirEntry
             if let Ok(metadata) = dir_entry.metadata() {
+               let item;
                // below, `dir_entry` is a `DirEntry`.
                if metadata.is_file() {
-                  let item = FoundItem {
+                  item = FoundItem {
                      item_type: ItemType::File,
                      item_path: dir_entry.path()
                   };
-                  item.dump();
                }
                else if metadata.is_dir() {
-                  let item = FoundItem {
+                  item = FoundItem {
                      item_type: ItemType::Dir,
                      item_path: dir_entry.path()
                   };
-                  item.dump();
                }
                else {
-                  let item = FoundItem {
+                  item = FoundItem {
                      item_type: ItemType::Other,
                      item_path: dir_entry.path()
                   };
-                  item.dump();
+
                }
+               // dump the item that we just created
+               item.dump();
             }
          }
       }
