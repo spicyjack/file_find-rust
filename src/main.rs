@@ -54,11 +54,14 @@ fn main() {
    // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
    if let Ok(entries) = fs::read_dir(idg_dir) {
       for dir_entry in entries {
+
+         // the item being tested/checked
+         let item;
+
          if let Ok(dir_entry) = dir_entry {
             //let path = dir_entry.path();
             // get the metadata object for this DirEntry
             if let Ok(metadata) = dir_entry.metadata() {
-               let item;
                // below, `dir_entry` is a `DirEntry`.
                if metadata.is_file() {
                   item = FoundItem {
