@@ -50,9 +50,12 @@ fn main() {
    idg_dir.push("Doom");
    idg_dir.push("idgames");
 
+   let mut items_v = Vec::new();
    // working example from:
    // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
+   // returns an array of DirEntry objects
    if let Ok(entries) = fs::read_dir(idg_dir) {
+      // for each DirEntry object...
       for dir_entry in entries {
 
          // the item being tested/checked
@@ -82,13 +85,17 @@ fn main() {
                   };
 
                }
-               // dump the item that we just created
-               item.dump();
+               // push this items onto a Vec
+               items_v.push(item);
             }
          }
       }
    }
 
+   for item in items_v {
+      // dump each item
+      item.dump();
+   }
 /*
 // doesn't work, try!() won't handle _Result_ objects
    for entry in try!(fs::read_dir(idg_dir)) {
