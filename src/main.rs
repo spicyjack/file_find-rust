@@ -4,7 +4,8 @@ use std::fs; // fs::read_dir()
 //use std::path::Path;
 use std::path::PathBuf;
 
-
+// allow ItemType to be cloned/copied
+#[derive(Copy, Clone)]
 enum ItemType {
    Dir,
    File,
@@ -12,10 +13,13 @@ enum ItemType {
 }
 
 
+// allow FoundItem to be cloned/copied
+#[derive(Copy, Clone)]
 struct FoundItem {
    item_type: ItemType,
    item_path: PathBuf,
 }
+
 
 impl FoundItem {
    fn dump(self: FoundItem) {
@@ -51,6 +55,7 @@ fn main() {
    idg_dir.push("idgames");
 
    let mut items_v = Vec::new();
+   let mut recurse_stack = Vec::new();
    // working example from:
    // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
    // returns an array of DirEntry objects
@@ -77,6 +82,7 @@ fn main() {
                      item_type: ItemType::Dir,
                      item_path: dir_entry.path()
                   };
+                  recurse_stack.push(item);
                }
                else {
                   item = FoundItem {
