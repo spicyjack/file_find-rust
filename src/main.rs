@@ -61,7 +61,7 @@ fn main() {
    // working example from:
    // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
    // returns an array of DirEntry objects
-   if let Ok(entries) = fs::read_dir(idg_dir.clone()) {
+   if let Ok(entries) = fs::read_dir(&idg_dir) {
       // for each DirEntry object...
       for dir_entry in entries {
 
