@@ -5,7 +5,7 @@ use std::fs; // fs::read_dir()
 use std::path::PathBuf;
 
 // allow ItemType to be cloned/copied
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 enum ItemType {
    Dir,
    File,
@@ -14,7 +14,7 @@ enum ItemType {
 
 
 // allow FoundItem to be cloned/copied
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 struct FoundItem {
    item_type: ItemType,
    item_path: PathBuf,
@@ -82,7 +82,7 @@ fn main() {
                      item_type: ItemType::Dir,
                      item_path: dir_entry.path()
                   };
-                  recurse_stack.push(item);
+                  recurse_stack.push(item.clone());
                }
                else {
                   item = FoundItem {
