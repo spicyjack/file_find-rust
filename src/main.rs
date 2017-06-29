@@ -84,6 +84,7 @@ fn main() {
                      item_type: ItemType::Dir,
                      item_path: dir_entry.path()
                   };
+                  // XXX clone this directory, or create a reference to it?
                   recurse_stack.push(item.clone());
                }
                else {
