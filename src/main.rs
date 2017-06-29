@@ -4,7 +4,8 @@ use std::fs; // fs::read_dir()
 //use std::path::Path;
 use std::path::PathBuf;
 
-// allow ItemType to be cloned/copied
+
+// allow ItemType to be cloned
 #[derive(Clone)]
 enum ItemType {
    Dir,
@@ -13,7 +14,8 @@ enum ItemType {
 }
 
 
-// allow FoundItem to be cloned/copied
+// allow FoundItem to be cloned
+// 'PathBuf' only allows cloning, not copying
 #[derive(Clone)]
 struct FoundItem {
    item_type: ItemType,
