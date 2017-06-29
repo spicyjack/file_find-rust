@@ -59,7 +59,7 @@ fn main() {
    // working example from:
    // https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_name
    // returns an array of DirEntry objects
-   if let Ok(entries) = fs::read_dir(idg_dir) {
+   if let Ok(entries) = fs::read_dir(idg_dir.clone()) {
       // for each DirEntry object...
       for dir_entry in entries {
 
@@ -98,6 +98,7 @@ fn main() {
       }
    }
 
+   println!("Dumping items in {:?}", idg_dir);
    for item in items_v {
       // dump each item
       item.dump();
