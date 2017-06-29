@@ -38,6 +38,7 @@ impl FoundItem {
    }
 }
 
+
 fn main() {
    //let mut idg_dir_path = PathBuf::from("~/Files/Doom/idgames");
    // create an empty PathBuf
